@@ -15,15 +15,14 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        $p1 = new User;
+        /*$p1 = new User;
         $p1->username = "tomBlaine";
         $p1->password = "password";
-        $p1->firstname = "Thomas";
-        $p1->lastname = "Blaine";
+        $p1->name = "Thomas Blaine";
         $p1->email = "2033755@swansea.ac.uk";
-        $p1->DOB = '2002-05-16';
         $p1->save();
-        App/Models/User::factory()->count(50)->create();
+        */
+        User::factory()->count(50)->create();
 
     }
 }

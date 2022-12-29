@@ -8,11 +8,14 @@
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
 
-        <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
-            @csrf
-            @method('DELETE')
-            <button type="submit">Delete</button>
-        </form>
+        @if ($post->User->id = auth()->id())
+            <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
+                @csrf
+                @method('DELETE')
+                <button type="submit">Delete</button>
+            </form>
+        @endif
+
 
         <p> </p>
         <p>Comments: </p>

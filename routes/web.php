@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,9 @@ Route::get('/dashboard', function () {
 
 Route::get('/posts/create', [PostController::class, 'create'])
     ->name('posts.create')->middleware(['auth']);
+
+Route::post('/posts/{id}', [CommentController::class, 'store'])
+    ->name('comments.store')->middleware(['auth']);
 
 Route::post('/timeline', [PostController::class, 'store'])
     ->name('posts.store')->middleware(['auth']);

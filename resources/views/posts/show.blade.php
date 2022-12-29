@@ -16,6 +16,13 @@
             @endforeach
         </ul>
 
+        <form method="POST" action="{{route('comments.store', ['id'=>$post])}}">
+            @csrf
+            <p>Your Comment: <input type="text" name="comment"></p>
+            <input type="submit" value="Post">
+        </form>
+
+
     </ul>
 
 @endsection

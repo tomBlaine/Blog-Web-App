@@ -8,6 +8,12 @@
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
 
+        <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
+            @csrf
+            @method('DELETE')
+            <button type="submit">Delete</button>
+        </form>
+
         <p> </p>
         <p>Comments: </p>
         <ul>

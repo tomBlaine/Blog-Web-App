@@ -42,7 +42,8 @@ Route::get('/posts/{id}', [PostController::class, 'show'])
 Route::get('/timeline', [PostController::class, 'index'])
     ->name('posts.index');
 
-
+Route::delete('/posts/{id}', [PostController::class, 'destroy'])
+    ->name('posts.destroy');
 
 Route::get('/users/{id}', [UserController::class, 'show'])
     ->name('users.show');

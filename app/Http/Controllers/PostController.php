@@ -44,5 +44,13 @@ class PostController extends Controller
         return view('posts.index', ['posts' => $posts]);
     }
 
+    public function destroy($id)
+    {
+        $post = Post::findOrFail($id);
+        $post->delete();
+
+        return redirect()->route('posts.index')->with('message', 'Post was deleted.');
+    }
+
 }
 

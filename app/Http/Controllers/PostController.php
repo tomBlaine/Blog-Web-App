@@ -15,6 +15,11 @@ class PostController extends Controller
         return view('posts.show', ['post' => $post, 'comments'=>$comments]);
     }
 
+    public function create()
+    {
+        return view('posts.create');
+    }
+
     public function index()
     {
         $posts = Post::get();

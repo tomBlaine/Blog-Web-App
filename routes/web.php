@@ -26,6 +26,8 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::get('/posts/create', [PostController::class, 'create'])
+    ->name('posts.create')->middleware(['auth']);
 
 Route::get('/posts/{id}', [PostController::class, 'show'])
     ->name('posts.show');

@@ -29,6 +29,9 @@ Route::get('/dashboard', function () {
 Route::get('/posts/create', [PostController::class, 'create'])
     ->name('posts.create')->middleware(['auth']);
 
+Route::post('/timeline', [PostController::class, 'store'])
+    ->name('posts.store')->middleware(['auth']);
+
 Route::get('/posts/{id}', [PostController::class, 'show'])
     ->name('posts.show');
 

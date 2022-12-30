@@ -33,7 +33,7 @@
         <ul>
         
         @foreach ($comments as $comment)
-            <li> {{$comment->User->username}}:
+            <li> <a href={{route('users.show', ['id'=>$comment->user_id])}}> {{$comment->User->username}}: </a>
                 <div class="comment-container">
 
                 <div class="comment-text">{{$comment->comment_text}}</div> 

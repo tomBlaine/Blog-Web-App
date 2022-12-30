@@ -1,5 +1,5 @@
 <?php
-
+use Illuminate\Routing\Router;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
@@ -27,23 +27,52 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/posts/create', [PostController::class, 'create'])
-    ->name('posts.create')->middleware(['auth']);
 
-Route::post('/posts/{id}', [CommentController::class, 'store'])
-    ->name('comments.store')->middleware(['auth']);
+//WONT SHOW IN LIST EVEN THOUGH ITS THERE^^
 
-Route::post('/timeline', [PostController::class, 'store'])
-    ->name('posts.store')->middleware(['auth']);
 
-Route::get('/posts/{id}', [PostController::class, 'show'])
-    ->name('posts.show');
+//$router->delete('/posts/{id}', function (Comment $comment) {
+//    $comment = Comment::findOrFail($comment);
+//    $comment->delete();
+
+//    return redirect()->route('posts.show', ['id'=>$comment->post_id])->with('message', 'Comment was deleted.');
+//})->name('comments.destroy');
+
+
+
+Route::delete('/posts/{id}', [CommentController::class, 'destroy'])
+    ->name('comments.destroy')->middleware(['auth']);
 
 Route::get('/timeline', [PostController::class, 'index'])
     ->name('posts.index');
 
-Route::delete('/posts/{id}', [PostController::class, 'destroy'])
-    ->name('posts.destroy');
+Route::get('/posts/{id}/edit', [PostController::class, 'edit'])
+    ->name('posts.edit')->middleware(['auth']);
+
+Route::delete('/posts/{id}/delete', [PostController::class, 'destroy'])
+    ->name('posts.destroy')->middleware(['auth']);
+
+Route::get('/posts/create', [PostController::class, 'create'])
+    ->name('posts.create')->middleware(['auth']);
+
+Route::put('/posts/{id}', [PostController::class, 'update'])
+    ->name('posts.update')->middleware(['auth']);
+
+
+
+Route::post('/timeline', [PostController::class, 'store'])
+    ->name('posts.store')->middleware(['auth']);
+
+Route::post('/posts/{id}', [CommentController::class, 'store'])
+    ->name('comments.store')->middleware(['auth']);
+
+Route::get('/posts/{id}', [PostController::class, 'show'])
+    ->name('posts.show');
+
+
+
+
+
 
 Route::get('/users/{id}', [UserController::class, 'show'])
     ->name('users.show');

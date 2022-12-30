@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
@@ -51,6 +52,33 @@ class PostController extends Controller
 
         return redirect()->route('posts.index')->with('message', 'Post was deleted.');
     }
+
+
+    public function edit($id)
+    {
+        $post= Post::findOrFail($id);
+        return view('posts.edit', ['post'=>$post]);
+        
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string', 'max:3000'],
+        ]);
+
+        $post= Post::findOrFail($id);
+        $post->title = $validatedData['title'];
+        $post->text = $validatedData['body'];
+        $post->save();
+
+        session()->flash('message', 'Post was changed.');
+        return redirect()->route('posts.index');
+
+
+    }
+
 
 }
 

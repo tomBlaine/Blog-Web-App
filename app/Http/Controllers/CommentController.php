@@ -24,4 +24,12 @@ class CommentController extends Controller
         session()->flash('message', 'Comment was posted.');
         return redirect()->route('posts.show', ['id'=>$id]);
     }
+
+    public function destroy($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $comment->delete();
+
+        return redirect()->route('posts.show', ['id'=>$comment->post_id])->with('message', 'Comment was deleted.');
+    }
 }

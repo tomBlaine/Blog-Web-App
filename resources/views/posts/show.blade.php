@@ -15,7 +15,7 @@
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
 
-        @if ($post->User->id == auth()->id())
+        @if ($post->User->id == auth()->id() || auth()->user()->privileges>1)
             <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
                 @csrf
                 @method('DELETE')
@@ -37,7 +37,7 @@
                 <div class="comment-container">
 
                 <div class="comment-text">{{$comment->comment_text}}</div> 
-                    @if($comment->user_id == auth()->user()->id)
+                    @if($comment->user_id == auth()->user()->id || auth()->user()->privileges>1 || $post->user_id == auth()->user()->id)
                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
                         @csrf
                         @method('DELETE')

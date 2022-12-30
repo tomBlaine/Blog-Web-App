@@ -14,6 +14,11 @@
         <li>Username: {{$post->User->username}}</li>
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
+        <li>
+            @if($post->file_path)
+            <img src="{{ $post->file_path }}" alt="Photo">
+            @endif
+        </li>
 
         @if ($post->User->id == auth()->id() || auth()->user()->privileges>1)
             <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">

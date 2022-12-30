@@ -21,6 +21,7 @@ class PostFactory extends Factory
         return [
             'title'=>fake()->sentence(),
             'text'=>fake()->text(),
+            'file_path' =>fake()->image('public/storage/photos', 640, 480, 'cats', false),
             'user_id'=>User::inRandomOrder()->first()->id,
         ];
     }

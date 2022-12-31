@@ -2,9 +2,11 @@
 
 <head>
     <title>Blog Application - @yield('title')</title>
+    @livewireStyles
 </head>
 
 <body>
+    @livewireScripts
     <h1>Toms Blog App - @yield('title')</h1>
 
 

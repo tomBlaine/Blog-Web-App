@@ -27,11 +27,13 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string', 'max:3000'],
+            'img' =>['max:2000']
         ]);
 
         $a = new Post;
         $a->title = $validatedData['title'];
         $a->text = $validatedData['body'];
+        $a->file_path=$validatedData['img'];
         $a->user_id = auth()->id();
         $a->save();
 
@@ -66,11 +68,13 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string', 'max:3000'],
+            'img' =>['max:2000'],
         ]);
 
         $post= Post::findOrFail($id);
         $post->title = $validatedData['title'];
         $post->text = $validatedData['body'];
+        $post->file_path=$validatedData['img'];
         $post->save();
 
         session()->flash('message', 'Post was changed.');

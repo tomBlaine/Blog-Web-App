@@ -9,6 +9,7 @@
         @method('PUT')
         <p>Title: <input type="text" name="title" value="{{$post->title}}"></p>
         <p>Body: <input type="text" name="body" value="{{$post->text}}"></p>
+        <p>Attached image URL: <input type="text" name="img" value="{{$post->file_path}}"></p>
         <input type="submit" value="Post">
         <a href="{{route('posts.index')}}">Cancel</a>
     </form>

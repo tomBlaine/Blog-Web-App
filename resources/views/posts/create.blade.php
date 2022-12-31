@@ -8,6 +8,7 @@
         @csrf
         <p>Title: <input type="text" name="title"></p>
         <p>Body: <input type="text" name="body"></p>
+        <p>Attached image URL: <input type="text" name="img"></p>
         <input type="submit" value="Post">
         <a href="{{route('posts.index')}}">Cancel</a>
     </form>

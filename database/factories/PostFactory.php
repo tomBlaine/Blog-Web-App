@@ -18,10 +18,17 @@ class PostFactory extends Factory
      */
     public function definition()
     {
+
+        if(User::inRandomOrder()->first()->id>25){
+            $imageUrl = fake()->imageUrl($width=600, $height=400, $randomize=true);
+        } else {
+            $imageUrl = null;
+        }
+
         return [
             'title'=>fake()->sentence(),
             'text'=>fake()->text(),
-            'file_path' =>fake()->image('public/storage/photos', 640, 480, 'cats', false),
+            'file_path' =>$imageUrl,
             'user_id'=>User::inRandomOrder()->first()->id,
         ];
     }

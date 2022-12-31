@@ -11,7 +11,7 @@
     </style>
 
     <ul>
-        <li>Username: {{$post->User->username}}</li>
+        <li>@ {{$post->User->username}}</li>
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
         <li>

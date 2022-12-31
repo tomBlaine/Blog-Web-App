@@ -20,13 +20,16 @@
             @endif
         </li>
 
-        @if ($post->User->id == auth()->id() || auth()->user()->privileges>1)
-            <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
-                @csrf
-                @method('DELETE')
-                <button type="submit">Delete</button>
-            </form>
-        @endif
+        @auth
+            @if ($post->User->id == auth()->id() || auth()->user()->privileges>1)
+                <form method="POST" action="{{route('posts.destroy', ['id'=>$post])}}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit">Delete</button>
+                </form>
+            @endif
+        @endauth
+        
 
         @if ($post->User->id == auth()->id())
             <li><a href={{route('posts.edit', ['id'=>$post])}}>Edit Post</a></li>
@@ -42,6 +45,7 @@
                 <div class="comment-container">
 
                 <div class="comment-text">{{$comment->comment_text}}</div> 
+                @auth
                     @if($comment->user_id == auth()->user()->id || auth()->user()->privileges>1 || $post->user_id == auth()->user()->id)
                     <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
                         @csrf
@@ -49,6 +53,7 @@
                         <button type="submit" style="float: right">Delete</button>
                     </form>
                     @endif
+                @endauth
                 </div>
             </li>
         @endforeach

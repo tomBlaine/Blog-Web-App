@@ -53,11 +53,17 @@
                         <button type="submit" style="float: right">Delete</button>
                     </form>
                     @endif
+
+                    @if($comment->user_id == auth()->user()->id || auth()->user()->privileges>1)
+                    <a href={{route('comments.edit', ['id'=>$comment])}}>Edit Comment</a>
+                    @endif
                 @endauth
                 </div>
             </li>
         @endforeach
-        
+        <div>
+            @yield('editComment')
+        </div>
 
         </ul>
         <div class="comment-container">

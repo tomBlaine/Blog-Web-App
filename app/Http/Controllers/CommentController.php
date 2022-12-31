@@ -32,4 +32,28 @@ class CommentController extends Controller
 
         return redirect()->route('posts.show', ['id'=>$comment->post_id])->with('message', 'Comment was deleted.');
     }
+
+    public function edit($id)
+    {
+        $comment = Comment::findOrFail($id);
+        $post = Post::findOrFail($comment->post_id);
+        $comments=Comment::where('post_id', $comment->post_id)->get();
+        return view('comments.edit', ['comment'=>$comment, 'post'=>$post, 'comments'=>$comments]);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'text' => ['required', 'string', 'max:3000'],
+        ]);
+
+        $comment= Comment::findOrFail($id);
+        $comment->comment_text = $validatedData['text'];
+        $comment->save();
+
+        session()->flash('message', 'Comment was changed.');
+        return redirect()->route('posts.show', ['id'=>$comment->post_id]);
+
+
+    }
 }

@@ -49,6 +49,9 @@ Route::get('/timeline', [PostController::class, 'index'])
 Route::get('/posts/{id}/edit', [PostController::class, 'edit'])
     ->name('posts.edit')->middleware(['auth']);
 
+Route::get('/posts/{id}/{id2}', [CommentController::class, 'edit'])
+    ->name('comments.edit')->middleware(['auth']);
+
 Route::delete('/posts/{id}/delete', [PostController::class, 'destroy'])
     ->name('posts.destroy')->middleware(['auth']);
 
@@ -58,7 +61,8 @@ Route::get('/posts/create', [PostController::class, 'create'])
 Route::put('/posts/{id}', [PostController::class, 'update'])
     ->name('posts.update')->middleware(['auth']);
 
-
+Route::put('/posts/{id}', [CommentController::class, 'update'])
+    ->name('comments.update')->middleware(['auth']);
 
 Route::post('/timeline', [PostController::class, 'store'])
     ->name('posts.store')->middleware(['auth']);

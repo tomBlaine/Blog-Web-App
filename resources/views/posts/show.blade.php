@@ -30,11 +30,12 @@
             @endif
         @endauth
         
-
-        @if ($post->User->id == auth()->id())
-            <li><a href={{route('posts.edit', ['id'=>$post])}}>Edit Post</a></li>
-        @endif
-
+        @auth
+            @if ($post->User->id == auth()->id() || auth()->user()->privileges>1)
+                <li><a href={{route('posts.edit', ['id'=>$post])}}>Edit Post</a></li>
+            @endif
+        @endauth
+        
 
         <p> </p>
         <p>Comments: </p>

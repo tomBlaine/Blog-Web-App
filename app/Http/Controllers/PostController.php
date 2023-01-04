@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\PostController;
 
 class PostController extends Controller
 {
@@ -31,16 +32,11 @@ class PostController extends Controller
         return view('posts.create');
     }
 
-    public function store(Request $request)
-    {
-        $validatedData = $request->validate([
-            'title' => ['required', 'string', 'max:255'],
-            'body' => ['required', 'string', 'max:3000'],
-            'img' =>['max:2000'],
-            'tags' => ['max:500']
-        ]);
 
-        $words = explode(' ', $validatedData['tags']);
+    public function tagStringToID(string $tagString)
+    {
+
+        $words = explode(' ', $tagString);
 
         //dd($words);
         $tags = [];
@@ -53,7 +49,24 @@ class PostController extends Controller
             }
             array_push($tags, $tag);
         }
-        
+
+        $tagIDs = [];
+        foreach ($tags as $tag){
+            array_push($tagIDs, $tag->id);
+        }
+
+        return $tagIDs;
+
+    }
+
+    public function store(Request $request)
+    {
+        $validatedData = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'body' => ['required', 'string', 'max:3000'],
+            'img' =>['max:2000'],
+            'tags' => ['max:500']
+        ]);
 
         $a = new Post;
         $a->title = $validatedData['title'];
@@ -62,15 +75,7 @@ class PostController extends Controller
         $a->user_id = auth()->id();
         
 
-        //$a->each(function ($a) use ($tags) {
-        //    $a->tags()->attach(
-        //        $tags
-        //    );
-        //});
-        $tagIDs = [];
-        foreach ($tags as $tag){
-            array_push($tagIDs, $tag->id);
-        }
+        $tagIDs = PostController::tagStringToID($validatedData['tags']);
         
 
         $a->save();
@@ -100,7 +105,15 @@ class PostController extends Controller
     public function edit($id)
     {
         $post= Post::findOrFail($id);
-        return view('posts.edit', ['post'=>$post]);
+        $tags= DB::table('post_tag')->select('*')->where('post_id', $post->id)->get();
+        
+        $tagString = "";
+        foreach($tags as $tag){
+            $tag = Tag::where('id', $tag->tag_id)->first();
+            $tagString .= $tag->name ." ";
+        }
+
+        return view('posts.edit', ['post'=>$post, 'tagString'=>$tagString]);
         
     }
 
@@ -110,6 +123,7 @@ class PostController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string', 'max:3000'],
             'img' =>['max:2000'],
+            'tags' => ['max:500'],
         ]);
 
         $post= Post::findOrFail($id);
@@ -118,11 +132,16 @@ class PostController extends Controller
         $post->file_path=$validatedData['img'];
         $post->save();
 
+        $tagIDs = PostController::tagStringToID($validatedData['tags']);
+
+        $post->tags()->sync($tagIDs);
+
         session()->flash('message', 'Post was changed.');
         return redirect()->route('posts.index');
 
 
     }
+
 
 
 }

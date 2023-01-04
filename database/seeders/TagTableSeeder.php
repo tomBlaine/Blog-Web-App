@@ -4,9 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Post;
+use App\Models\Tag;
 
-class PostTableSeeder extends Seeder
+class TagTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -15,7 +15,6 @@ class PostTableSeeder extends Seeder
      */
     public function run()
     {
-        
-        Post::factory()->count(200)->create();
+        Tag::factory()->count(20)->create();
     }
 }

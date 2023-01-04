@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\TagController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -73,7 +74,8 @@ Route::post('/posts/{id}', [CommentController::class, 'store'])
 Route::get('/posts/{id}', [PostController::class, 'show'])
     ->name('posts.show');
 
-
+Route::get('/tags/{id}', [TagController::class, 'show'])
+    ->name('tags.show');
 
 
 

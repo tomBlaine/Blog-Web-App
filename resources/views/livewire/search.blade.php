@@ -3,7 +3,7 @@
     <ul>
         @if($users)
         @foreach($users as $user)
-            <li wire:key="{{$user->id }}">{{ $user->username }}</li>
+            <li wire:key="{{$user->id }}"><a href={{route('users.show', ['id'=>$user->id])}}>{{ $user->username }}</a></li>
         @endforeach
         @endif
     </ul>

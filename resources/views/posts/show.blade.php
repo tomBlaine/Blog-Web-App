@@ -14,10 +14,15 @@
         <li>@ {{$post->User->username}}</li>
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
-        <li>
+        <p>
             @if($post->file_path)
             <img src="{{ $post->file_path }}" alt="Photo">
             @endif
+        </p>
+        <li>Tags: 
+            @foreach ($tags as $tag)
+                {{$tag->name}}, 
+            @endforeach
         </li>
 
         @auth

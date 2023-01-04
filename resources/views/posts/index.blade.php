@@ -20,6 +20,8 @@
         }
     </style>
 
+    @livewire('search')
+
     <p>Your Timeline:</p>
     <ul>
         @foreach ($posts as $post)

@@ -36,15 +36,47 @@ class PostController extends Controller
         $validatedData = $request->validate([
             'title' => ['required', 'string', 'max:255'],
             'body' => ['required', 'string', 'max:3000'],
-            'img' =>['max:2000']
+            'img' =>['max:2000'],
+            'tags' => ['max:500']
         ]);
+
+        $words = explode(' ', $validatedData['tags']);
+
+        //dd($words);
+        $tags = [];
+        foreach ($words as $item){
+            $tag = Tag::where('name', $item)->first();
+            if (!$tag) {
+                $tag = new Tag;
+                $tag->name = $item;
+                $tag->save();
+            }
+            array_push($tags, $tag);
+        }
+        
 
         $a = new Post;
         $a->title = $validatedData['title'];
         $a->text = $validatedData['body'];
         $a->file_path=$validatedData['img'];
         $a->user_id = auth()->id();
+        
+
+        //$a->each(function ($a) use ($tags) {
+        //    $a->tags()->attach(
+        //        $tags
+        //    );
+        //});
+        $tagIDs = [];
+        foreach ($tags as $tag){
+            array_push($tagIDs, $tag->id);
+        }
+        
+
         $a->save();
+        
+        $a->tags()->sync($tagIDs);
+
 
         session()->flash('message', 'Post was created.');
         return redirect()->route('posts.index');

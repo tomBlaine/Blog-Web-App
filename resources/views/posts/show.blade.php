@@ -21,7 +21,7 @@
         </p>
         <li>Tags: 
             @foreach ($tags as $tag)
-                <a href={{route('tags.show', ['id' =>$tag->id])}}>#{{$tag->name}}, </a>
+                <a href={{route('tags.show', ['id' =>$tag->id])}}>{{$tag->name}}, </a>
             @endforeach
         </li>
 

@@ -46,16 +46,7 @@
         <div>
             @yield('editComment')
         </div>
-
-        <div class="comment-container">
-        <form method="POST" action="{{route('comments.store', ['id'=>$post])}}">
-            @csrf
-            <p>Your Comment: <input type="text" name="comment">
-            <input type="submit" value="Post" style="float: right">
-            </p>
-        </form>
-        </div>
-
+        <br>
         @auth
         @livewire('post-comment', ['postId' => $post->id])
         @endauth

@@ -31,10 +31,12 @@ class PostComment extends Component
 
 
         $this->body = '';
+        return redirect(request()->header('Referer'));
     }
 
     public function render()
     {
         return view('livewire.post-comment');
+        
     }
 }

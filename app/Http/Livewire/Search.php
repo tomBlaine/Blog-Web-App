@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\User;
 
+
 class Search extends Component
 {
 

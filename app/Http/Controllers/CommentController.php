@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Post;
 use App\Models\Comment;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class CommentController extends Controller
 {
@@ -38,7 +39,16 @@ class CommentController extends Controller
         $comment = Comment::findOrFail($id);
         $post = Post::findOrFail($comment->post_id);
         $comments=Comment::where('post_id', $comment->post_id)->get();
-        return view('comments.edit', ['comment'=>$comment, 'post'=>$post, 'comments'=>$comments]);
+
+        $tag_entries = DB::table('post_tag')->select('*')->where('post_id', $id)->get();
+
+        $tags = [];
+        foreach($tag_entries as $item){
+            $tag = Tag::where('id', $item->tag_id)->first();
+            array_push($tags, $tag);
+        }
+
+        return view('comments.edit', ['comment'=>$comment, 'post'=>$post, 'comments'=>$comments, 'tags'=>$tags]);
     }
 
     public function update(Request $request, $id)

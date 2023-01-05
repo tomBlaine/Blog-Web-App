@@ -40,38 +40,13 @@
                 <li><a href={{route('posts.edit', ['id'=>$post])}}>Edit Post</a></li>
             @endif
         @endauth
-        
 
-        <p> </p>
-        <p>Comments: </p>
-        <ul>
-        
-        @foreach ($comments as $comment)
-            <li> <a href={{route('users.show', ['id'=>$comment->user_id])}}> {{$comment->User->username}}: </a>
-                <div class="comment-container">
-
-                <div class="comment-text">{{$comment->comment_text}}</div> 
-                @auth
-                    @if($comment->user_id == auth()->user()->id || auth()->user()->privileges>1 || $post->user_id == auth()->user()->id)
-                    <form action="{{ route('comments.destroy', $comment->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" style="float: right">Delete</button>
-                    </form>
-                    @endif
-
-                    @if($comment->user_id == auth()->user()->id || auth()->user()->privileges>1)
-                    <a href={{route('comments.edit', ['id'=>$comment])}}>Edit Comment</a>
-                    @endif
-                @endauth
-                </div>
-            </li>
-        @endforeach
+        <br>
+        @livewire('index-comment', ['postId' => $post->id])
         <div>
             @yield('editComment')
         </div>
 
-        </ul>
         <div class="comment-container">
         <form method="POST" action="{{route('comments.store', ['id'=>$post])}}">
             @csrf
@@ -81,6 +56,9 @@
         </form>
         </div>
 
+        @auth
+        @livewire('post-comment', ['postId' => $post->id])
+        @endauth
     </ul>
 
 @endsection

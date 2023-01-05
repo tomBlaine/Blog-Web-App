@@ -11,7 +11,7 @@
     </style>
 
     <ul>
-        <li>@ {{$post->User->username}}</li>
+        <li><a href={{route('users.show', ['id'=>$post->user_id])}}>@ {{$post->User->username}}</a></li>
         <li>Title: {{$post->title}}</li>
         <li>Post: {{$post->text}}</li>
         <p>

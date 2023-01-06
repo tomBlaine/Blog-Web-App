@@ -19,7 +19,7 @@ class CommentFactory extends Factory
     public function definition()
     {
         return [
-            'comment_text'=>fake()->sentence(),
+            'comment_text'=>fake()->realText($maxNbChars = 100, $indexSize = 2),
             'post_id'=>Post::inRandomOrder()->first()->id,
             'user_id'=>User::inRandomOrder()->first()->id,
         ];

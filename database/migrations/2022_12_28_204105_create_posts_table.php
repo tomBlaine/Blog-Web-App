@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('text');
+            $table->string('text', 3000);
             $table->string('file_path')->nullable();
             $table->timestamps();
             $table->bigInteger('user_id')->references('id')->on('User')->onDelete('cascade')->onUpdate('cascade');

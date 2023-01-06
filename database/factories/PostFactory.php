@@ -26,8 +26,8 @@ class PostFactory extends Factory
         }
 
         return [
-            'title'=>fake()->sentence(),
-            'text'=>fake()->text(),
+            'title'=>fake()->realText($maxNbChars = 100, $indexSize = 2),
+            'text'=>fake()->realText($maxNbChars = 400, $indexSize = 2),
             'file_path' =>$imageUrl,
             'user_id'=>User::inRandomOrder()->first()->id,
         ];

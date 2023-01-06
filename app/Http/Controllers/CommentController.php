@@ -7,6 +7,7 @@ use App\Models\Post;
 use App\Models\Comment;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use App\Notifications\CommentNotification;
 
 class CommentController extends Controller
 {
@@ -21,6 +22,9 @@ class CommentController extends Controller
         $a->user_id = auth()->id();
         $a->post_id = $id;
         $a->save();
+
+        $post = Post::findOrFail($id);
+        $post->user->notify(new CommentNotification($a));
 
         session()->flash('message', 'Comment was posted.');
         return redirect()->route('posts.show', ['id'=>$id]);

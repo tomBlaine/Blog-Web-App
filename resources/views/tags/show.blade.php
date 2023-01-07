@@ -18,9 +18,13 @@
         .post-text {
           margin-left: 10px;
         }
+        .container {
+          max-width: 75%;
+        }
     </style>
 
     <p>Posts using #{{$tag->name}}</p>
+    <div class="container">
     <ul>
         @foreach ($posts as $post)
             <li class="username"><a href={{route('users.show', ['id'=>$post->user_id])}}> @ {{$post->User->username}}</a></li>
@@ -30,6 +34,7 @@
             <p> </p>
         @endforeach
     </ul>
+    </div>
 
 
 @endsection

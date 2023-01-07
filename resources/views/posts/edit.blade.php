@@ -7,10 +7,19 @@
     <form method="POST" action="{{route('posts.update', ['id'=>$post])}}">
         @csrf
         @method('PUT')
-        <p>Title: <input type="text" name="title" value="{{$post->title}}"></p>
-        <p>Body: <input type="text" name="body" value="{{$post->text}}"></p>
-        <p>Attached image URL: <input type="text" name="img" value="{{$post->file_path}}"></p>
-        <p>Tags: <input type="text" name="tags" value="{{$tagString}}"></p>
+        <p>Title: </p>
+        <textarea type="text" name="title" rows=2 style="width: 80%">{{$post->title}}</textarea>
+
+        <p>Body: </p>
+        <textarea type="text" name="body" rows=15 style="width: 80%">{{$post->text}}</textarea>
+
+        <p>Attached image URL: </p>
+        <textarea type="text" name="img" rows=1 style="width: 80%">{{$post->file_path}}</textarea>
+
+        <p>Tags: </p>
+        <textarea type="text" name="tags" rows=1 style="width: 80%">{{$tagString}}</textarea>
+        <br>
+        <br>
         <input type="submit" value="Post">
         <a href="{{route('posts.index')}}">Cancel</a>
     </form>

@@ -5,7 +5,8 @@
 <form method="POST" action="{{route('comments.update', ['id'=>$comment])}}">
     @csrf
     @method('PUT')
-    <p>Comment: <input type="text" name="text" value="{{$comment->comment_text}}"></p>
+    <p>Comment: </p>
+    <textarea type="text" name="text" rows=3 style="width: 30%">{{$comment->comment_text}}</textarea>
     <input type="submit" value="Save">
     <a href="{{route('posts.index')}}">Cancel</a>
 </form>

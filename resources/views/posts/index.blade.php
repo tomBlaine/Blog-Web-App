@@ -22,14 +22,21 @@
           float: right;
         }
         .container {
-          max-width: 75%; 
+          max-width: 75%;
         }
+
+      
 
     </style>
 
     @livewire('search')
     <div class="container">
-    <p>Your Timeline:</p>
+    @auth
+    <p>{{auth()->user()->username}} Timeline:</p>
+    @endauth
+    @guest
+    <p>Timeline:</p>
+    @endguest
     <ul>
         @foreach ($posts as $post)
             <li class="username"><a href={{route('users.show', ['id'=>$post->user_id])}}> @ {{$post->User->username}}</a></li>

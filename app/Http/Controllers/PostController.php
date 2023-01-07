@@ -10,13 +10,14 @@ use App\Models\Tag;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\PostController;
+use App\Notifications\PostEditDeleted;
 
 class PostController extends Controller
 {
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        $comments = Comment::where('post_id', $id)->get();
+        $comments = Comment::where('post_id', $id)->orderBy('created_at','asc')->get();
         $tag_entries = DB::table('post_tag')->select('*')->where('post_id', $id)->get();
 
         $tags = [];
@@ -97,7 +98,9 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
         $post->delete();
-
+        if(auth()->user()->id!=$post->user->id){
+            $post->user->notify(new PostEditDeleted($post));
+        }
         return redirect()->route('posts.index')->with('message', 'Post was deleted.');
     }
 

@@ -7,18 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class CommentNotification extends Notification
+class PostEditDeleted extends Notification
 {
     use Queueable;
-    public $comment;
+    public $post;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($comment)
+    public function __construct($post)
     {
-        $this->comment = $comment;
+        $this->post=$post;
     }
 
     /**
@@ -41,10 +41,8 @@ class CommentNotification extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Someone has commented on your post!')
-                    ->line("{$this->comment->user->username} has commented on your post: {$this->comment->post->title}")
-                    ->line("@{$this->comment->user->username} commented: ".$this->comment->comment_text)
-                    ->action('View Post', url('/posts/'.$this->comment->post->id))
+                    ->subject('Your post was Deleted by an admin.')
+                    ->line("Post: {$this->post->title} was deleted by an admin user")
                     ->line('Thank you for using our application!');
     }
 
@@ -57,8 +55,8 @@ class CommentNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'comment_id' => $this->comment->id,
-            'comment_body' => $this->comment->comment_text,
+            'post_id' => $this->post->id,
+            'post_title'=>$this->post->title,
         ];
     }
 }

@@ -11,9 +11,13 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\PostController;
 use App\Notifications\PostEditDeleted;
+use App\Http\Joke;
 
 class PostController extends Controller
 {
+
+
+
     public function show($id)
     {
         $post = Post::findOrFail($id);
@@ -88,10 +92,13 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
-    public function index()
+    public function index(Joke $joke)
     {
-        $posts = Post::orderBy('created_at', 'desc')->simplePaginate(8);
-        return view('posts.index', ['posts' => $posts]);
+        
+        $jokeText = $joke->getRandomJoke();
+        //dd($jokeText);
+        $posts = Post::orderBy('created_at', 'desc')->simplePaginate(7);
+        return view('posts.index', ['posts' => $posts, 'joke'=>$jokeText]);
     }
 
     public function destroy($id)

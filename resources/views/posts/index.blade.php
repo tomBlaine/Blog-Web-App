@@ -31,6 +31,7 @@
 
     @livewire('search')
     <div class="container">
+    <p>Joke of the day! (From JokeAPI):<br>{{$joke}}</p>
     @auth
     <p>{{auth()->user()->username}} Timeline:</p>
     @endauth

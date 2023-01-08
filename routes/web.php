@@ -6,6 +6,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\TagController;
+use App\Http\Joke;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +18,9 @@ use App\Http\Controllers\TagController;
 |
 */
 
-
+app()->singleton('App\Http\Joke', function($app){
+    return new Joke();
+});
 
 
 Route::get('/', function () {
